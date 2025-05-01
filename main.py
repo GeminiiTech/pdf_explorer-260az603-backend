@@ -20,7 +20,7 @@ app = FastAPI(
 )
 
 # Enable CORS
-origins = ["http://localhost:5175"]
+origins = [os.getenv("FRONTEND_URL")]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -67,11 +67,11 @@ async def extract_text_from_pdf(file: UploadFile = File(...), prompt: str = Form
     except Exception as e:
         return {"error": f"An error occurred: {str(e)}"}
 
-@app.get("/get-models", tags=["AI"])
-async def get_models():
-    try:
-        models = genai.list_models()
-        model_names = [m.name for m in models]
-        return {"List Of Models": model_names}
-    except Exception as e:
-        return {"error": f"Failed to fetch models: {str(e)}"}
+# @app.get("/get-models", tags=["AI"])
+# async def get_models():
+#     try:
+#         models = genai.list_models()
+#         model_names = [m.name for m in models]
+#         return {"List Of Models": model_names}
+#     except Exception as e:
+#         return {"error": f"Failed to fetch models: {str(e)}"}
